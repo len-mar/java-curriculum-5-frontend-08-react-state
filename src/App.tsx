@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import CharacterPage from "./pages/CharacterPage.tsx";
 import NavBar from "./components/NavBar.tsx";
 import CharacterDetailCard from "./components/CharacterDetailCard.tsx";
+import CharacterCreator from "./components/CharacterCreator.tsx";
 
 export default function App() {
 
@@ -13,7 +14,8 @@ export default function App() {
             <Routes>
                 <Route path={"/"} element={<Welcome/>}></Route>
                 <Route path={"/characters"} element={<CharacterPage/>}></Route>
-                <Route path={"/characters/:id"} element={<CharacterDetailCard/>}></Route>
+                <Route path={"/create"} element={<CharacterCreator/>}></Route>
+                <Route path={"/character/:id"} element={<CharacterDetailCard/>}></Route>
             </Routes>
         </>
     );
