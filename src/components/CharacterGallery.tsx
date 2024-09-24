@@ -2,7 +2,7 @@ import {Character} from "../types/RickAndMortyCharacter.ts";
 import CharacterCard from "./CharacterCard.tsx";
 import "./CharacterGallery.css";
 
-type CharacterGalleryProps = {
+export type CharacterGalleryProps = {
     characters: Character[];
 }
 export default function CharacterGallery(props: Readonly<CharacterGalleryProps>) {

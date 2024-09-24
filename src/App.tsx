@@ -1,22 +1,20 @@
 import './App.css'
-import CharacterGallery from "./components/CharacterGallery.tsx";
-import {useState} from "react";
-import {characters} from "./Characters.ts";
+import Welcome from "./pages/Welcome.tsx";
+import { Route, Routes } from 'react-router-dom';
+import CharacterPage from "./pages/CharacterPage.tsx";
+import NavBar from "./components/NavBar.tsx";
+import CharacterDetailCard from "./components/CharacterDetailCard.tsx";
 
 export default function App() {
-    const [searchText, setSearchText] = useState("");
-
-    const filteredCharacters = characters
-        .filter((character) => character.name.toLowerCase().includes(searchText.toLowerCase()));
 
     return (
         <>
-            <input type="text" onChange={(e) => setSearchText(e.target.value)} placeholder="Search for a character"/>
-            {
-                filteredCharacters.length > 0
-                    ? <CharacterGallery characters={filteredCharacters}/>
-                    : <p>No characters found</p>
-            }
+            <NavBar/>
+            <Routes>
+                <Route path={"/"} element={<Welcome/>}></Route>
+                <Route path={"/characters"} element={<CharacterPage/>}></Route>
+                <Route path={"/characters/:id"} element={<CharacterDetailCard/>}></Route>
+            </Routes>
         </>
     );
 }
