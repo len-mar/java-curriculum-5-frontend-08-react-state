@@ -1,21 +1,13 @@
 import {useState} from "react";
-import {characters} from "../Characters.ts";
 import {useNavigate} from "react-router-dom";
+import {CharacterListProps} from "../pages/CharacterPage.tsx";
 
-
-export default function CharacterCreator() {
+export default function CharacterCreator(props:Readonly<CharacterListProps>) {
     const [nameInput, setNameInput] = useState<string>("")
     const [speciesInput, setSpeciesInput] = useState<string>("")
     const [statusInput, setStatusInput] = useState<string>("")
     const navigate = useNavigate()
 
-    /* type SmallCharacter = {
-        name:string,
-        species:string,
-        status:string
-    }
-    */
-    
     function handleOnChangeName(event: React.ChangeEvent<HTMLInputElement>) {
         setNameInput(event.target.value)
     }
@@ -32,8 +24,9 @@ export default function CharacterCreator() {
         // prevents reload
         event.preventDefault()
 
+        // FIXME: this will never match the actual Character type, what to do?
         if (nameInput.length !== 0 && speciesInput.length !== 0 && statusInput.length !== 0) {
-            characters.push({name: nameInput, species: speciesInput, status: statusInput})
+            props.characters.push({name: nameInput, species: speciesInput, status: statusInput})
             setNameInput("")
             setSpeciesInput("")
             setStatusInput("")
