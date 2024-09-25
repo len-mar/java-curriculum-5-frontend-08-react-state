@@ -1,11 +1,10 @@
-import {useState} from "react";
+import {SetStateAction, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Character} from "../types/RickAndMortyCharacter.ts";
 
 type CharacterCreatorProps = {
     characters:Character[],
-    // todo: is there a better way than this?
-    setCharacters: ([]) => void
+    setCharacters: React.Dispatch<SetStateAction<Character[]>>
 }
 export default function CharacterCreator(props:CharacterCreatorProps) {
     const [nameInput, setNameInput] = useState<string>("")
@@ -29,9 +28,9 @@ export default function CharacterCreator(props:CharacterCreatorProps) {
         // prevents reload
         event.preventDefault()
 
-        // FIXME: this will never match the actual Character type, what to do?
+        // FIXME: this will never match the actual full Character type, what to do?
         if (nameInput.length !== 0 && speciesInput.length !== 0 && statusInput.length !== 0) {
-            props.setCharacters([...props.characters, {name: nameInput, species: speciesInput, status: statusInput}])
+            props.setCharacters([...props.characters, {id: crypto.randomUUID(), name: nameInput, species: speciesInput, status: statusInput}])
             setNameInput("")
             setSpeciesInput("")
             setStatusInput("")

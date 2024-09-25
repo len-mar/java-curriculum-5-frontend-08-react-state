@@ -2,15 +2,22 @@ import CharacterCard from "./CharacterCard.tsx";
 import {useParams} from "react-router-dom";
 import {Character} from "../types/RickAndMortyCharacter.ts";
 import {CharacterListProps} from "../pages/CharacterPage.tsx";
+import {useEffect, useState} from "react";
 
-// FIXME: after creating a new character, the detail card via click doesn't work, characters doesn't seem to be passed properly
-export default function CharacterDetailCard(props:Readonly<CharacterListProps>){
-    const param:string = useParams()
-    const id:string = param.id.toString()
-    // this seems to be the part that doesn't work
-    const char:Character[] = props.characters.filter((character:Character) => character.id.toString() === id)
+export default function CharacterDetailCard(props: Readonly<CharacterListProps>) {
+    const [char, setChar] = useState<Character>()
+    const param = useParams()
+    // handles possibility of param.id being undefined
+    const id: string = param.id ? param.id.toString() : ""
+
+    // todo: why does this dependencies array NOT update infinitely?
+    useEffect(() => {
+        setChar(props.characters.find((character: Character) => character.id.toString() === id))
+    }, [props.characters, id])
+
+    // returns char only when one was found, otherwise, display error message
     return <>
-    <h2>character detail card</h2>
-        <CharacterCard character={char[0]}></CharacterCard>
+        <h2>character detail card</h2>
+        {char ? <CharacterCard character={char}></CharacterCard> : <p>No character found with that id :(</p>}
     </>
 }
