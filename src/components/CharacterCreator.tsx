@@ -1,8 +1,13 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {CharacterListProps} from "../pages/CharacterPage.tsx";
+import {Character} from "../types/RickAndMortyCharacter.ts";
 
-export default function CharacterCreator(props:Readonly<CharacterListProps>) {
+type CharacterCreatorProps = {
+    characters:Character[],
+    // todo: is there a better way than this?
+    setCharacters: ([]) => void
+}
+export default function CharacterCreator(props:CharacterCreatorProps) {
     const [nameInput, setNameInput] = useState<string>("")
     const [speciesInput, setSpeciesInput] = useState<string>("")
     const [statusInput, setStatusInput] = useState<string>("")
@@ -26,7 +31,7 @@ export default function CharacterCreator(props:Readonly<CharacterListProps>) {
 
         // FIXME: this will never match the actual Character type, what to do?
         if (nameInput.length !== 0 && speciesInput.length !== 0 && statusInput.length !== 0) {
-            props.characters.push({name: nameInput, species: speciesInput, status: statusInput})
+            props.setCharacters([...props.characters, {name: nameInput, species: speciesInput, status: statusInput}])
             setNameInput("")
             setSpeciesInput("")
             setStatusInput("")
