@@ -5,8 +5,9 @@ import {CharacterListProps} from "../pages/CharacterPage.tsx";
 
 // FIXME: after creating a new character, the detail card via click doesn't work, characters doesn't seem to be passed properly
 export default function CharacterDetailCard(props:Readonly<CharacterListProps>){
-    const param = useParams()
-    const id = param.id
+    const param:string = useParams()
+    const id:string = param.id.toString()
+    // this seems to be the part that doesn't work
     const char:Character[] = props.characters.filter((character:Character) => character.id.toString() === id)
     return <>
     <h2>character detail card</h2>
